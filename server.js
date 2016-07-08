@@ -84,19 +84,41 @@ app.get('/api/todos/:id', function show(req, res) {
 
    res.json(todoWeWant);
 
+   for (var i=0; i<todos.length; i++) {
+    if(idWeWant === todos[i]._id) {
+
+    }
+   }
+
 });
 
 app.put('/api/todos/:id', function update(req, res) {
+    var oneToUpdate = parseInt(req.params.id);
+    var actualUpdate = req.body;
+    for(var i = 0; i < todos.length; i ++){
+      if (oneToUpdate === todos[i]._id){ 
+        actualUpdate._id= oneToUpdate;
+        todos[i] = actualUpdate;
+        res.json(todos[i]); 
+      }
+    }   
+  });
   /* This endpoint will update a single todo with the
    * id specified in the route parameter (:id) and respond
    * with the newly updated todo.
    */
-});
+
 
 app.delete('/api/todos/:id', function destroy(req, res) {
-  var oneToDelete = req.params.id;
-  todos.splice(oneToDelete);
-  res.json(true);
+  var oneToDelete = parseInt(req.params.id);
+  console.log(req.params);
+  for(var i = 0; i < todos.length; i ++){
+    if (oneToDelete === todos[i]._id){ 
+      console.log("this works");
+       todos.splice(i, 1);
+    }
+  }
+  res.json(todos);
  });
 
 
